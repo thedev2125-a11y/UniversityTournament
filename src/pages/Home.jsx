@@ -23,6 +23,7 @@ import {
   getFeaturedMatch,
   getUpcomingFixtures,
   getByeTeams,
+  isGroupStageRound,
 } from '../utils/tournamentStats';
 
 export default function Home() {
@@ -48,8 +49,10 @@ export default function Home() {
   const topScorers = getTopScorers(players, 3);
   const standingsA = getTeamsByGroup(teams, 'A').slice(0, 3);
   const standingsB = getTeamsByGroup(teams, 'B').slice(0, 3);
-  const byeTeams = featuredMatch ? getByeTeams(teams, fixtures, featuredMatch.round) : [];
-  const totalGoals = players.reduce((s, p) => s + p.goals, 0);
+const byeTeams =
+  featuredMatch && isGroupStageRound(featuredMatch.round)
+    ? getByeTeams(teams, fixtures, featuredMatch.round)
+    : [];  const totalGoals = players.reduce((s, p) => s + p.goals, 0);
   const matchesPlayed = results.length;
 
   return (

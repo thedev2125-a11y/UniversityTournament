@@ -9,22 +9,55 @@
 /** Team objects enriched with played/wins/draws/losses/GF/GA/GD/points,
  * computed from completed fixtures only. Shape matches the original
  * teams.json exactly, so TeamCard/StandingsTable/etc. need no changes. */
+const GROUP_STAGE_ROUNDS = new Set([
+  'Round 1',
+  'Round 2',
+  'Round 3',
+  'Round 4',
+  'Round 5',
+]);
+
+const KNOCKOUT_ROUNDS = new Set([
+  'Quarter Final',
+  'Semi Final',
+  'Final',
+]);
 export function computeStandings(teams, fixtures) {
   const stats = new Map(
-    teams.map((t) => [t.id, { played: 0, wins: 0, draws: 0, losses: 0, gf: 0, ga: 0, points: 0 }])
+    teams.map((t) => [
+      t.id,
+      {
+        played: 0,
+        wins: 0,
+        draws: 0,
+        losses: 0,
+        gf: 0,
+        ga: 0,
+        points: 0,
+      },
+    ])
   );
 
   fixtures
-    .filter((f) => f.status === 'completed' && f.homeScore != null && f.awayScore != null)
+    .filter(
+      (f) =>
+        GROUP_STAGE_ROUNDS.has(f.round) &&
+        f.status === 'completed' &&
+        f.homeScore != null &&
+        f.awayScore != null
+    )
     .forEach((f) => {
       const home = stats.get(f.homeTeamId);
       const away = stats.get(f.awayTeamId);
+
       if (!home || !away) return;
 
       home.played += 1;
       away.played += 1;
+
       home.gf += f.homeScore;
       home.ga += f.awayScore;
+
       away.gf += f.awayScore;
       away.ga += f.homeScore;
 
@@ -46,6 +79,7 @@ export function computeStandings(teams, fixtures) {
 
   return teams.map((t) => {
     const s = stats.get(t.id);
+
     return {
       ...t,
       played: s.played,

@@ -86,3 +86,6 @@ export function parseMatchDate(dateStr, timeStr) {
   const d = new Date(combined);
   return isNaN(d.getTime()) ? null : d;
 }
+export function isGroupStageRound(round) {
+  return !['Quarter Final', 'Semi Final', 'Final'].includes(round);
+}
