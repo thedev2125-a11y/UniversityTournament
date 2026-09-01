@@ -18,7 +18,9 @@ const GROUP_OPTIONS = [
 
 export default function Teams() {
   const { teamSearch, setTeamSearch } = useTournament();
-  const { teamsWithStats: teams } = useData();
+
+  const { teamsWithTournamentStats: teams } = useData();
+
   const [teamGroupFilter, setTeamGroupFilter] = useState('all');
 
   const filtered = useMemo(() => {

@@ -9,6 +9,7 @@ import {
 import { defaultData, slugify } from "../data/defaultData";
 import {
   computeStandings,
+  computeTeamTournamentStats,
   computePlayerStats,
   computeFixtureDisplay,
 } from "../utils/computeStats";
@@ -464,6 +465,10 @@ export function DataProvider({ children }) {
     () => computeStandings(teams, fixtures),
     [teams, fixtures],
   );
+  const teamsWithTournamentStats = useMemo(
+  () => computeTeamTournamentStats(teams, fixtures),
+  [teams, fixtures],
+);
   const playersWithStats = useMemo(
     () => computePlayerStats(players, fixtures, teams),
     [players, fixtures, teams],
@@ -1696,9 +1701,10 @@ export function DataProvider({ children }) {
       byeAnnouncements,
       // derived (always-correct) collections — used by the public site
       teamsWithStats,
+      teamsWithTournamentStats,
       playersWithStats,
       fixturesDisplay,
-      resultsDisplay,
+resultsDisplay,
       // CRUD
       addTeam,
       updateTeam,
@@ -1740,6 +1746,7 @@ export function DataProvider({ children }) {
       settings,
       byeAnnouncements,
       teamsWithStats,
+      teamsWithTournamentStats,
       playersWithStats,
       fixturesDisplay,
       resultsDisplay,

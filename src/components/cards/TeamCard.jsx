@@ -22,7 +22,7 @@ export default function TeamCard({ team }) {
       <div className="grid grid-cols-3 gap-2 w-full mt-5 text-center">
         <Stat label="Played" value={team.played} />
         <Stat label="Wins" value={team.wins} />
-        <Stat label="Goals" value={team.goals} />
+        <Stat label="Goal Scored" value={team.goals} />
       </div>
 
       <Link
