@@ -14,7 +14,7 @@ export function TournamentProvider({ children }) {
   const [teamSearch, setTeamSearch] = useState('');
   const [playerSearch, setPlayerSearch] = useState('');
   const [fixtureFilter, setFixtureFilter] = useState('all'); // all | upcoming | live | completed
-  const [newsFilter, setNewsFilter] = useState('all');
+  const [newsFilter, setNewsFilter] = useState('');
 
   const value = {
     teamSearch,
